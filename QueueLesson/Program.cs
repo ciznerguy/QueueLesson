@@ -375,9 +375,135 @@ namespace QueueLesson
             }
             return queueToReturn;
         }
+        
+        public static void InsertSortedQueue(Queue<int> myQueue, int x)
+        {
+            bool isInserted = false;
+            Queue<int> temp = new Queue<int>();
+            if (myQueue.IsEmpty())
+            {
+                myQueue.Insert(x);
+            }
+            else
+            {
+                while (!myQueue.IsEmpty())
+                {
+                    if (x <= myQueue.Head() && isInserted == false)
+                    {
+                        temp.Insert(x);
+                        isInserted = true;
+                    }
+                    else
+                    {
+                        temp.Insert(myQueue.Remove());
+                    }
+                }
+                while (!temp.IsEmpty())
+                {
+                    myQueue.Insert(temp.Remove());
+                }
+                if(isInserted == false)
+                {
+                    myQueue.Insert(x);
+                }
+            }
+        }
+        /*
+         * נתונה המחלקה CovidTest , המייצגת אדם שנבדק בדיקת קורונה, ולה 4 תכונות:
+• name — שם הנבדק מטיפוס מחרוזת
+• id — מספר זהות מטיפוס מחרוזת
+• cityCode — קוד של עיר המגורים, מטיפוס שלם )לדוגמה: 1030 בעבור אשדוד, 23 בעבור עכו(
+• sick — משתנה מטיפוס בוליאני, המקבל true אם הנבדק חולה, אחרת הוא מקבל false
+
+הנח שיש פעולות get ו־ set בשפת Java ופעולות Get ו־ Set בשפת #C בעבור תכונות המחלקה.
+
+כתוב פעולה חיצונית mostSick בשפת Java או MostSick בשפת #C המקבלת תור — q שאינו ריק מטיפוס CovidTest .
+הפעולה תחזיר את הקוד של העיר שבה כמות החולים היא הגדולה ביותר.
+
+הערות: – מיקום הנבדקים בתור אינו לפי סדר כלשהו.
+           – כל נבדק מופיע רק פעם אחת בתור.
+           – הקוד של העיר אינו קשור לגודל התור (לדוגמה: ייתכן שמספר האיברים בתור הוא 1000 וקיים קוד עיר שמספרו 5000).
+           – אין צורך לשמור על התור.
+הנח שיש רק עיר אחת שבה כמות החולים היא הגדולה ביותר.
+        */
+        public static int MostSick(Queue<CovidTest> q)
+        {
+            int maxSick = 0;
+            int maxCityCode = 0;
+            int num;
+        
+            while (!q.IsEmpty())
+            {
+               
+                int code = q.Head().GetCityCode();
+                num = NumOfSickInCity (q, code);
+                if (num > maxSick)
+                {
+                    maxSick = num;
+                    maxCityCode = code;
+                }              
+                           
+            }
+            
+            return maxCityCode;
+        }
+
+        public static int NumOfSickInCity(Queue<CovidTest> q, int cityCode)
+        {
+            int count = 0;
+         
+            Queue<CovidTest> temp = new Queue<CovidTest>();
+            while (!q.IsEmpty())
+            {
+                if (q.Head().GetCityCode() == cityCode)
+                {
+                    if(q.Remove().GetIsSick())
+                    {
+                        count++;
+                    }
+                    
+                }
+                else
+                {
+                    temp.Insert(q.Remove());
+                   
+                }
+               
+            }
+            while (!temp.IsEmpty())
+            {
+                q.Insert(temp.Remove());
+            }
+            return count;
+        }   
         static void Main(string[] args)
         {
-            Queue<int> myQueue = new Queue<int>();
+           
+
+            CovidTest test1 = new CovidTest("Name1", "ID1", 123,true );
+            CovidTest test2 = new CovidTest("Name2", "ID2", 123, true);
+            CovidTest test3 = new CovidTest("Name3", "ID3", 423, true);
+            CovidTest test4 = new CovidTest("Name4", "ID4", 123, false);
+            CovidTest test5 = new CovidTest("Name5", "ID5", 333, true);
+            CovidTest test6 = new CovidTest("Name6", "ID6", 123, false);
+          
+
+            
+            Queue<CovidTest> covidQueue = new Queue<CovidTest>();
+
+            covidQueue.Insert(test1);
+            covidQueue.Insert(test2);
+            covidQueue.Insert(test3);
+            covidQueue.Insert(test4);
+            covidQueue.Insert(test5);
+            covidQueue.Insert(test6);
+            
+            Console.WriteLine(MostSick(covidQueue));
+
+
+
+
+            /*Queue<int> myQueue = new Queue<int>();
             myQueue.Insert(6);
             myQueue.Insert(10);
             myQueue.Insert(15);
@@ -392,10 +518,10 @@ namespace QueueLesson
             myQueueTwo.Insert(55);
             myQueueTwo.Insert(100);
             myQueueTwo.Insert(642);
+            Queue<int> myQueue1 = new Queue<int>();
             Console.WriteLine(myQueue);
-            Console.WriteLine(myQueueTwo);
-            Queue<int> newQueue = MergeSortedQueue(myQueue, myQueueTwo);
-            Console.WriteLine(newQueue);
+            InsertSortedQueue(myQueue,5000);
+            Console.WriteLine(myQueue);
 
             ////CloneQ(myQueue);
             //Queue<int> myQueue2 = CloneQ(myQueue);
@@ -403,7 +529,7 @@ namespace QueueLesson
             ////Console.WriteLine(CountQ(myQueue));
             //Console.WriteLine($"the sum is: {SumQ(myQueue)}");
             //Console.WriteLine(IsInQueue(myQueue, 58));
-   
+            */
         }
     }
 
