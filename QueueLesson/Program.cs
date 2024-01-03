@@ -502,8 +502,7 @@ namespace QueueLesson
 
 
 
-
-            /*Queue<int> myQueue = new Queue<int>();
+            Queue<int> myQueue = new Queue<int>();
             myQueue.Insert(6);
             myQueue.Insert(10);
             myQueue.Insert(15);
@@ -518,9 +517,19 @@ namespace QueueLesson
             myQueueTwo.Insert(55);
             myQueueTwo.Insert(100);
             myQueueTwo.Insert(642);
-            Queue<int> myQueue1 = new Queue<int>();
-            Console.WriteLine(myQueue);
-            InsertSortedQueue(myQueue,5000);
+
+
+            Console.WriteLine(ReturnFromQueue(myQueueTwo, 3));
+
+
+
+            //CloneQ(myQueue);
+            Queue<int> myQueue2 = CloneQ(myQueue);
+            //Console.WriteLine(myQueue2);
+            //Console.WriteLine(CountQ(myQueue));
+            Console.WriteLine($"the sum is: {SumQ(myQueue)}");
+            Console.WriteLine(IsInQueue(myQueue, 58));
+
             Console.WriteLine(myQueue);
 
             ////CloneQ(myQueue);
@@ -529,7 +538,7 @@ namespace QueueLesson
             ////Console.WriteLine(CountQ(myQueue));
             //Console.WriteLine($"the sum is: {SumQ(myQueue)}");
             //Console.WriteLine(IsInQueue(myQueue, 58));
-            */
+   
         }
     }
 
