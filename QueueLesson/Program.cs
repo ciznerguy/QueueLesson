@@ -475,7 +475,65 @@ namespace QueueLesson
                 q.Insert(temp.Remove());
             }
             return count;
-        }   
+        }
+
+        public static bool IsIdentical(Queue<int> q1, Queue<int> q2)
+        {
+            if (CountQ(q1) != CountQ(q2))
+            {
+                return false;
+            }
+            Queue<int> temp1 = CloneQ(q1);
+            Queue<int> temp2 = CloneQ(q2);
+
+            while (!temp1.IsEmpty())
+            {
+                if (temp1.Remove() != temp2.Remove())
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+        public static bool IsSimilar(Queue<int> q1, Queue<int> q2)
+        {
+            if (CountQ(q1) != CountQ(q2))
+            {
+                return false;
+            }
+            Queue<int> temp1 = CloneQ(q1);
+            Queue<int> temp2 = CloneQ(q2);
+
+            for (int i = 0; i < CountQ(q1)-1; i++)
+            {
+                if (IsIdentical(temp1, temp2))
+                {
+                    return true;
+                }
+                temp1.Insert(temp1.Remove());
+            }
+            return false;
+
+        }
+
+        public static bool IsSumExists(Queue<int> q1, int num)
+        {
+            Queue<int> temp = CloneQ(q1);
+
+            while (!temp.IsEmpty())
+            {
+                int current = temp.Remove();
+                int lookFor = num - current;
+                if (IsInQueue(temp, lookFor))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         static void Main(string[] args)
         {
            
